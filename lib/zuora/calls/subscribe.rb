@@ -3,11 +3,12 @@ module Zuora
     class Subscribe < Hashie::Dash
       property :account, required: true
       property :payment_method
-      property :bill_to_contact, required: true
+      property :bill_to_contact
       property :sold_to_contact
       property :subscribe_options
       property :subscription
       property :rate_plan
+      property :rate_plan_charge
 
       SIMPLE_OBJECTS = [:account, :payment_method, :bill_to_contact].freeze
 
@@ -50,6 +51,9 @@ module Zuora
           build_object(builder, :Subscription, subscription)
           builder[:api].RatePlanData do
             build_object(builder, :RatePlan, rate_plan)
+            builder[:api].RatePlanChargeData do
+              build_object(builder, :RatePlanCharge, rate_plan_charge)
+            end
           end
         end
       end
